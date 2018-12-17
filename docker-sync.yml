@@ -1,0 +1,10 @@
+version: '2'
+options:
+    compose-file-path: 'docker-compose.yml'
+    verbose: true
+
+syncs:
+  FONTEND_DOCKER_SYNC_VOLUME:
+    notify_terminal: false
+    src: './frontend/vue/src'
+    watch_strategy: 'fswatch'

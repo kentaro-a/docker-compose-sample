@@ -1,0 +1,38 @@
+version: "3"
+services:
+    backend:
+        tty: true
+        build: ./backend/go
+        container_name: "backend"
+        volumes:
+            - ./backend/go/src/app:/go/src/app
+        ports:
+            - "20002:30002"
+        restart: always
+        expose:
+            - "30002"
+    batch:
+        tty: true
+        build: ./batch/go
+        container_name: "batch"
+        volumes:
+            - ./batch/go/src/app:/go/src/app
+        ports:
+            - "20005:80"
+        restart: always
+    frontend:
+        tty: true
+        build: ./frontend/vue
+        container_name: "frontend"
+        volumes:
+            - FONTEND_DOCKER_SYNC_VOLUME:/src:rw
+        ports:
+            - "20003:80"
+        links:
+            - backend
+        restart: always
+
+volumes:
+    FONTEND_DOCKER_SYNC_VOLUME:
+        external: true
+
